@@ -1,0 +1,46 @@
+
+class Solution {
+private:
+    int find_last_max_idx(vector<int>& height){
+        int max=height[0],max_idx=0;
+        for (int i = 0; i < height.size() ; ++i) {
+            if(height[i]>max){
+                max=height[i];
+                max_idx=i;
+            }
+        }
+        return max_idx;
+    }
+public:
+    int trap(vector<int>& height) {
+        int sum=0;
+        int max_in_vec = find_last_max_idx(height);
+        int max=height[0];
+        for (int i = 0; i < max_in_vec; ++i) {
+            if(height[i] <= max ){
+                sum += max-height[i];
+            }
+            else{
+                max=height[i];
+            }
+        }
+        max=height[height.size()-1];
+        for (int i = height.size()-1; i > max_in_vec; --i) {
+            if(height[i] <= max){
+                sum+= max-height[i];
+            } else{
+                max=height[i];
+            }
+        }
+        return sum;
+    }
+
+};
+
+
+int main(){
+    Solution sol;
+    vector<int> nums={5,4,1,2,3};
+    int res = sol.trap(nums);
+    return 0;
+}
